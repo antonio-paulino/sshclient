@@ -20,12 +20,12 @@ class _MyWidgetState extends State<AddClient> {
         backgroundColor: Colors.blue,
       ),
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
+            const Column(
               children: [
                 Text('General'), // Text widget to display the text 'General: '
                 SizedBox(
@@ -50,7 +50,7 @@ class _MyWidgetState extends State<AddClient> {
                 ],
               ),
             ),
-            Column(
+            const Column(
               children: [
                 Text(
                     'Connection'), // Text widget to display the text 'Connection: '
@@ -92,7 +92,42 @@ class _MyWidgetState extends State<AddClient> {
                   ),
 
 
+
                 ],
+              ),
+            ),
+
+
+            const SizedBox(height:10), // Add some vertical space between the text fields
+
+
+            SizedBox(
+              height: _textfieldheight,
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Username',
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: _textfieldheight,
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: _textfieldheight,
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Command',
+                ),
               ),
             ),
 

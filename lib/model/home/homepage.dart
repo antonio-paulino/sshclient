@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:sshclient/model/client/addClient.dart';
+import 'package:sshclient/model/client/addclient.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
