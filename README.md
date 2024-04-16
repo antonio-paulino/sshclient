@@ -37,14 +37,9 @@ To get started with this application, clone the repository and run `flutter run`
     flutter run
     ```
 
-## Usage
-To create a new SSH client, navigate to the 'Add Client' page and fill out the form with the client's username, password, host, port, and the command to execute. After the client is created, you can use it to execute the specified command.
-
 ## Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. Please see the 'Contributing' section in the documentation for more details on how to contribute.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
