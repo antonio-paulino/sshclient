@@ -22,7 +22,7 @@ To get started with this application, clone the repository and run `flutter run`
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   https://github.com/antonio-paulino/sshclient.git
 2. Navigate to the project directory
    ```sh
    cd Project-Name
