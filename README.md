@@ -38,7 +38,7 @@ To get started with this application, clone the repository and run `flutter run`
     ```
 
 ## Contributing
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. Please see the 'Contributing' section in the documentation for more details on how to contribute.
+Any contributions you make are **greatly appreciated**.
 
 ## License
 
