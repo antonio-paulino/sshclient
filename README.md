@@ -12,10 +12,6 @@ This is a Flutter application designed to create and manage SSH clients. An SSH 
 ## Dependencies
 This project uses the [dartssh2](https://github.com/TerminalStudio/dartssh2) library, an SSH and SFTP client written in pure Dart. The library provides a secure and reliable way to connect to devices over SSH, which is crucial for the functionality of this app.
 
-## Getting Started
-
-To get started with this application, clone the repository and run `flutter run` in the root directory.
-
 ## Prerequisites
 
 - Flutter SDK
