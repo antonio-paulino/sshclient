@@ -24,7 +24,7 @@ This project uses the [dartssh2](https://github.com/TerminalStudio/dartssh2) lib
    git clone https://github.com/antonio-paulino/sshclient.git
 2. Navigate to the project directory
    ```sh
-   cd Project-Name
+   cd sshclient
 3. Install dependencies
     ```sh
     flutter pub get
