@@ -9,6 +9,9 @@ This is a Flutter application designed to create and manage SSH clients. An SSH 
 - Form validation to ensure correct input.
 - Scrollable form to prevent overflow when keyboard is opened.
 
+## Dependencies
+This project uses the [dartssh2](https://github.com/TerminalStudio/dartssh2) library, an SSH and SFTP client written in pure Dart. The library provides a secure and reliable way to connect to devices over SSH, which is crucial for the functionality of this app.
+
 ## Getting Started
 
 To get started with this application, clone the repository and run `flutter run` in the root directory.
@@ -22,7 +25,7 @@ To get started with this application, clone the repository and run `flutter run`
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/antonio-paulino/sshclient.git
 2. Navigate to the project directory
    ```sh
    cd Project-Name
