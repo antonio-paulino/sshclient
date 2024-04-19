@@ -6,8 +6,10 @@ class ClientCreatePage extends StatefulWidget {
   final int? index;
   final Function saveNewTask;
   final Function deleteTask;
+  final Function updateTask;
+  final bool? isNew;
 
-  const ClientCreatePage({super.key,this.index , this.client = const SSHClientManager('', '', '', '', 22, ''), required this.saveNewTask, required this.deleteTask});
+  const ClientCreatePage({super.key, this.index,this.client = const SSHClientManager('', '', '', '', 22, ''), required this.saveNewTask, required this.deleteTask, required this.updateTask, required this.isNew});
 
   @override
   State<ClientCreatePage> createState() => _ClientCreatePage();
@@ -68,7 +70,7 @@ class _ClientCreatePage extends State<ClientCreatePage> {
               },
             ),
             TextButton(
-              child:  Text("Delete $id", style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
+              child:  Text("Delete", style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
               onPressed: () {
                 widget.deleteTask(id);
                 Navigator.pushNamed(context, '/home');
@@ -110,7 +112,11 @@ class _ClientCreatePage extends State<ClientCreatePage> {
                   _commandController.text,
                 );
                 // Save the new task
-                widget.saveNewTask(client);
+                if(widget.isNew!) {
+                  widget.saveNewTask(client);
+                } else {
+                  widget.updateTask(client, widget.index!);
+                }
                 clearText();
               }
             },

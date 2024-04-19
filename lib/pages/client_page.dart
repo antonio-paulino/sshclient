@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sshclient/components/drawer.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sshclient/database/sshclient_database.dart';
+import 'package:sshclient/manager/runner.dart';
 import 'package:sshclient/pages/client_create_page.dart';
 import 'package:sshclient/manager/sshclientmanager.dart';
 
@@ -13,48 +13,54 @@ class SSHClient extends StatefulWidget {
 }
 
 class _SSHClientState extends State<SSHClient> {
-
   final SSHClientDataBase _db = SSHClientDataBase();
 
-  final _sSHClientBox = Hive.box('SSHClient');
-
-  
 
   @override
   void initState() {
-
     // if this is the first time running the app, create initial data
-
-    
-    if (_sSHClientBox.get('SSHClient') == null) {
-      _db.createInitialData();
-    } else {
-      _db.loadData();
-    }
-
     super.initState();
+    _db.loadData();
   }
 
   void saveNewTask(SSHClientManager client) {
     setState(() {
-      _db.sSHClientList.add([client.getName(),client.getUsername(), client.getPassword(), client.getHost(), client.getPort(), client.getCommand()]);
+      _db.sSHClientList.add(clientToDb(client));
+      _db.updateData();
 
       Navigator.of(context).pop();
     });
     
-    _db.updateData();
-    
     
   }
+
   void deleteTask(int id) {
     setState(() {
       _db.sSHClientList.removeAt(id);
+      _db.updateData();
     });
-    _db.updateData();
-
   }
+
+  void updateTask(SSHClientManager client, int index) {
+    setState(() {
+      _db.sSHClientList[index] = clientToDb(client);
+      _db.updateData();
+      Navigator.of(context).pop();
+    });
+  }
+
   void createClient() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ClientCreatePage(saveNewTask: saveNewTask, deleteTask: deleteTask,)));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ClientCreatePage(
+          saveNewTask: saveNewTask,
+          deleteTask: deleteTask,
+          updateTask: updateTask,
+          isNew: true,
+        ),
+      ),
+    );
   }
 
   @override
@@ -65,7 +71,9 @@ class _SSHClientState extends State<SSHClient> {
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: createClient,
+        onPressed:() {  
+          createClient(); 
+        },
         backgroundColor: Theme.of(context).colorScheme.secondary,
         child: Icon(
           Icons.add,
@@ -87,14 +95,28 @@ class _SSHClientState extends State<SSHClient> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ClientCreatePage(client: dbToClient( _db.sSHClientList[index],), index: index, deleteTask: deleteTask, saveNewTask: saveNewTask,)));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ClientCreatePage(
+                                client: dbToClient(
+                                  _db.sSHClientList[index],
+                                ),
+                                index: index,
+                                deleteTask: deleteTask,
+                                saveNewTask: saveNewTask,
+                                updateTask: updateTask,
+                                isNew: false,
+                              ),
+                            ),
+                          );
                         },
-                        child: const Text('Edit'),
+                        child: Text('Edit', style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
                       ),
                       IconButton(
                         icon: const Icon(Icons.play_arrow),
                         onPressed: () {
-                          // Add your delete functionality here
+                          Runner(sshClientManager: dbToClient(_db.sSHClientList[index])).run();
                         },
                       ),
                     ],
@@ -105,7 +127,6 @@ class _SSHClientState extends State<SSHClient> {
           );
         },
       ),
-
     );
   }
 }

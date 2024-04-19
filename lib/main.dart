@@ -4,14 +4,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:sshclient/pages/client_page.dart';
 import 'package:sshclient/pages/settings_page.dart';
 import 'package:sshclient/theme/theme_provider.dart';
-import 'package:sshclient/database/sshclient_adapter.dart';
 
 void main() async {
   // init Hive
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
 
-  Hive.registerAdapter(SSHClientManagerAdapter());
 
   await Hive.openBox('SSHClient');
   

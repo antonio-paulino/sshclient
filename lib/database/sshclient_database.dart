@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:sshclient/manager/sshclientmanager.dart';
 
 class SSHClientDataBase{
-  List<List> sSHClientList = [];
+  List sSHClientList = [];
 
   // reference the box
   final _sSHClientBox = Hive.box('SSHClient');
@@ -10,33 +10,29 @@ class SSHClientDataBase{
 
   // run this method if this is the first time ever running the app
   void createInitialData() {
-    sSHClientList = [
-      ['name', 'username', 'password', 'host', 22, 'command'],
-    ];
+    sSHClientList = [];
     updateData();
   }
 
   // load the data from the database
   void loadData() {
-  // Retrieve data from Hive box
-  var rawData = _sSHClientBox.get('SSHClient');
-
-  if (rawData != null && rawData is List<List<dynamic>>) {
-    sSHClientList = List<List>.from(rawData);
-  } else {
-    print('Data not in the expected format or is null');
+    var data = _sSHClientBox.get('SSHCLIENTLIST');
+    if (data is List) {
+      sSHClientList = data;
+    } else {
+      UnimplementedError();
+    }
   }
-}
 
   // update the database
 
   void updateData() {
-    _sSHClientBox.put('SSHClient', sSHClientList);
+    _sSHClientBox.put('SSHCLIENTLIST', sSHClientList);
   }
 
   // delete the database
   void deleteData() {
-    _sSHClientBox.delete('SSHClient');
+    _sSHClientBox.delete('SSHCLIENTLIST');
   }
 
 
