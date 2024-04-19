@@ -13,11 +13,26 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         children: [
           // header
-          DrawerHeader(
-            child: Icon(Icons.note,
-                color: Theme.of(context).colorScheme.inversePrimary),
+          SizedBox(
+            height: 100,
+            child: DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              margin: const EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
+              child: Center(
+                child: Text(
+                  "SSH Client",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            ),
           ),
-          // notes option
+          // ssh option
           DrawerTile(
             title: "SSH",
             leading: Icon(Icons.connecting_airports,

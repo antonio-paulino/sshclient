@@ -15,7 +15,6 @@ This project uses the [dartssh2](https://github.com/TerminalStudio/dartssh2) lib
 ## Prerequisites
 
 - Flutter SDK
-- Dart SDK
 
 ## Installation
 

@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:sshclient/pages/client_page.dart';
+import 'package:sshclient/pages/settings_page.dart';
 import 'package:sshclient/theme/theme_provider.dart';
+import 'package:sshclient/database/sshclient_adapter.dart';
 
-void main() {
+void main() async {
+  // init Hive
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(SSHClientManagerAdapter());
+
+  await Hive.openBox('SSHClient');
+  
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => ThemeProvider(),
-        ),
-      ],
-      child: const MyApp(),
-    ),
+      ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: const MyApp(),
+      ),
+   
   );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,29 +34,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const SSHClient(),
       theme: Provider.of<ThemeProvider>(context).themeData,
+      routes: {
+        '/home': (context) => const SSHClient(),
+        '/settings': (context) => const SettingsPage(), 
+      },
     );
   }
 }
 
 
-/*
-void showAddDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('New Window'),
-        content: const Text('This is the content of the new window.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Close'),
-          ),
-        ],
-      );
-    },
-  );
-}
-*/

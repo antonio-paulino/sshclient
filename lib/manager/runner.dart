@@ -6,8 +6,8 @@ import 'sshclientmanager.dart';
 class Runner {
   final SSHClientManager sshClientManager;
 
-  Runner(String username, String password, String host, int port)
-      : sshClientManager = SSHClientManager(username, password, host, port);
+  Runner(String name, String username, String password, String host, int port, String command)
+      : sshClientManager = SSHClientManager(name, username, password, host, port, command);
 
   Future<void> run() async {
     try {
@@ -19,7 +19,7 @@ class Runner {
 
       
       // Execute command
-      final session = await client.execute('ping -c 5 google.com');
+      final session = await client.execute(sshClientManager.getCommand());
 
       final output = <String>[];
 
@@ -32,9 +32,9 @@ class Runner {
       await session.done;
 
       print('Output:');
-      output.forEach((line) {
+      for (var line in output) {
         print(line);
-      });
+      }
 
       client.close();
     } catch (e) {

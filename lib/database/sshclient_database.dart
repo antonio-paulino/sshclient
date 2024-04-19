@@ -1,66 +1,51 @@
-import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
-import 'package:sshclient/database/sshclient_database_model.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:hive/hive.dart';
+import 'package:sshclient/manager/sshclientmanager.dart';
 
-class NoteDatabase extends ChangeNotifier{
+class SSHClientDataBase{
+  List<List> sSHClientList = [];
 
-  static late Isar _isar;
-  // init database
+  // reference the box
+  final _sSHClientBox = Hive.box('SSHClient');
 
-  static Future<void> init() async {
-    final dir = await getApplicationDocumentsDirectory();
 
-    _isar = await Isar.open([SSHClientModelSchema], directory:  dir.path);
-
+  // run this method if this is the first time ever running the app
+  void createInitialData() {
+    sSHClientList = [
+      ['name', 'username', 'password', 'host', 22, 'command'],
+    ];
+    updateData();
   }
 
-  // List of SSH clients
-  final List<SSHClientModel> currentNotes = [];
+  // load the data from the database
+  void loadData() {
+  // Retrieve data from Hive box
+  var rawData = _sSHClientBox.get('SSHClient');
 
-  // Function to add a new SSH client
-  Future<void> addSSHClient(SSHClientModel sshClient) async {
-    final newSSHClient = SSHClientModel(
-      sshClient.getName(),
-      sshClient.getUsername(),
-      sshClient.getPassword(),
-      sshClient.getHost(),
-      sshClient.getPort(),
-      sshClient.getCommand(),
-    );
-    await _isar.writeTxn(() => _isar.sSHClientModels.put(newSSHClient));
-    await fetchSSHClient();
+  if (rawData != null && rawData is List<List<dynamic>>) {
+    sSHClientList = List<List>.from(rawData);
+  } else {
+    print('Data not in the expected format or is null');
+  }
+}
+
+  // update the database
+
+  void updateData() {
+    _sSHClientBox.put('SSHClient', sSHClientList);
   }
 
-  // Function to fetch all SSH clients
-  Future<void> fetchSSHClient() async {
-    List<SSHClientModel> fetchNotes = await _isar.sSHClientModels.where().findAll();
-    currentNotes.clear();
-    currentNotes.addAll(fetchNotes);
-    notifyListeners();
-  }
-
-  // Function to update an existing SSH client
-  Future<void> updateSSHClient(int id, SSHClientModel sshClient) async {
-    final existingSSHClient = await _isar.sSHClientModels.get(id);
-    if (existingSSHClient != null) {
-      existingSSHClient.name = sshClient.name;
-      existingSSHClient.username = sshClient.username;
-      existingSSHClient.password = sshClient.password;
-      existingSSHClient.host = sshClient.host;
-      existingSSHClient.port = sshClient.port;
-      existingSSHClient.command = sshClient.command;
-      await _isar.writeTxn(() => _isar.sSHClientModels.put(existingSSHClient));
-      await fetchSSHClient();
-    }
+  // delete the database
+  void deleteData() {
+    _sSHClientBox.delete('SSHClient');
   }
 
 
-  // Function to delete an SSH client
-  Future<void> deleteSSHClient(int id) async {
+}
 
-    await _isar.writeTxn(() => _isar.sSHClientModels.delete(id));
-    await fetchSSHClient();
-  }
-  
+SSHClientManager dbToClient(List dbElement) {
+  return SSHClientManager(dbElement[0], dbElement[1], dbElement[2], dbElement[3], dbElement[4], dbElement[5]);
+}
+
+List clientToDb(SSHClientManager client) {
+  return [client.getName(), client.getUsername(), client.getPassword(), client.getHost(), client.getPort(), client.getCommand()];
 }
