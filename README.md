@@ -10,7 +10,11 @@ This is a Flutter application designed to create and manage SSH clients. An SSH 
 - Scrollable form to prevent overflow when keyboard is opened.
 
 ## Dependencies
-This project uses the [dartssh2](https://github.com/TerminalStudio/dartssh2) library, an SSH and SFTP client written in pure Dart. The library provides a secure and reliable way to connect to devices over SSH, which is crucial for the functionality of this app.
+This project uses the following libraries:
+
+- [dartssh2](https://github.com/TerminalStudio/dartssh2): An SSH and SFTP client written in pure Dart. The library provides a secure and reliable way to connect to devices over SSH, which is crucial for the functionality of this app.
+
+- [hive](https://github.com/hivedb/hive): A lightweight key-value database written in pure Dart. Hive is used in this project for storing and retrieving user data, providing a persistent local storage solution.
 
 ## Prerequisites
 
