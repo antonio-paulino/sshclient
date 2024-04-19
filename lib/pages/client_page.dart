@@ -15,7 +15,6 @@ class SSHClient extends StatefulWidget {
 class _SSHClientState extends State<SSHClient> {
   final SSHClientDataBase _db = SSHClientDataBase();
 
-
   @override
   void initState() {
     // if this is the first time running the app, create initial data
@@ -30,8 +29,6 @@ class _SSHClientState extends State<SSHClient> {
 
       Navigator.of(context).pop();
     });
-    
-    
   }
 
   void deleteTask(int id) {
@@ -66,15 +63,16 @@ class _SSHClientState extends State<SSHClient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text("SSH Client"),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:() {  
-          createClient(); 
+        onPressed: () {
+          createClient();
         },
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         child: Icon(
           Icons.add,
           color: Theme.of(context).colorScheme.inversePrimary,
@@ -85,14 +83,27 @@ class _SSHClientState extends State<SSHClient> {
         itemCount: _db.sSHClientList.length,
         itemBuilder: (context, index) {
           return Card(
+            color: Theme.of(context).colorScheme.primary,
             child: ListTile(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                 children: [
-                  Text(_db.sSHClientList[index][0]),
-                  Text(_db.sSHClientList[index][1]),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(_db.sSHClientList[index][0], style: const TextStyle(fontWeight: FontWeight.bold)),
+                      Text(_db.sSHClientList[index][3]),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.play_arrow),
+                        onPressed: () {
+                          Runner(sshClientManager: dbToClient(_db.sSHClientList[index])).run();
+                        },
+                      ),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -111,13 +122,7 @@ class _SSHClientState extends State<SSHClient> {
                             ),
                           );
                         },
-                        child: Text('Edit', style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.play_arrow),
-                        onPressed: () {
-                          Runner(sshClientManager: dbToClient(_db.sSHClientList[index])).run();
-                        },
+                        child: Text('Edit',style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary)),
                       ),
                     ],
                   ),
