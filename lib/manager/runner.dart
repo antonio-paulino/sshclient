@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartssh2/dartssh2.dart';
 
 import 'sshclientmanager.dart';
@@ -19,27 +21,22 @@ class Runner {
       // Execute command
       final session = await client.execute(sshClientManager.getCommand());
 
-      // final output = <String>[];
 
-      /*
+      
       await for (final chunk in session.stdout.cast<List<int>>().transform(const Utf8Decoder())) {
         print('chunk: "$chunk"');
       }
-      */
+      
 
       
 
       await session.done;
-      /*
-      print('Output:');
-      for (var line in output) {
-        print(line);
-      }
-      */
+      
 
       client.close();
+      print("Client closed");
     } catch (e) {
-      // print('Error: $e');
+      print('Error: $e');
     }
   }
 }
