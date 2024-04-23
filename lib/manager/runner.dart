@@ -19,18 +19,8 @@ class Runner {
 
       
       // Execute command
-      final session = await client.execute(sshClientManager.getCommand());
-
-
-      
-      await for (final chunk in session.stdout.cast<List<int>>().transform(const Utf8Decoder())) {
-        print('chunk: "$chunk"');
-      }
-      
-
-      
-
-      await session.done;
+      final session = await client.run(sshClientManager.getCommand());
+      print(utf8.decode(session));
       
 
       client.close();
