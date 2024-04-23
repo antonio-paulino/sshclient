@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sshclient/components/drawer.dart';
 import 'package:sshclient/database/sshclient_database.dart';
 import 'package:sshclient/manager/runner.dart';
@@ -102,6 +103,15 @@ class _SSHClientState extends State<SSHClient> {
                         icon: const Icon(Icons.play_arrow),
                         onPressed: () {
                           Runner(sshClientManager: dbToClient(_db.sSHClientList[index])).run();
+                          Fluttertoast.showToast(
+                            msg: "Running ${_db.sSHClientList[index][0]}", 
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            textColor: Theme.of(context).colorScheme.inversePrimary,
+                            fontSize: 16.0,
+                          );
                         },
                       ),
                       TextButton(
