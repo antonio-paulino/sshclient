@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dartssh2/dartssh2.dart';
 
@@ -19,14 +18,12 @@ class Runner {
 
       
       // Execute command
-      final session = await client.run(sshClientManager.getCommand());
-      print(utf8.decode(session));
+      await client.run(sshClientManager.getCommand());
       
 
       client.close();
-      print("Client closed");
     } catch (e) {
-      print('Error: $e');
+      rethrow;
     }
   }
 }

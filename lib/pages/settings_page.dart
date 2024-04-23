@@ -16,26 +16,24 @@ class SettingsPage extends StatelessWidget {
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,
       ),
-      body: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Dark Mode",
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.inversePrimary,
-              fontWeight: FontWeight.bold,
-            ),
-            ),
-            Switch(
-              value: Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
-              onChanged: (value){
-                Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-              },
-            ),
-
-          ],
-
-        ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Dark Mode",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.inversePrimary,
+            fontWeight: FontWeight.bold,
+          ),
+          ),
+          Switch(
+            value: Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
+            onChanged: (value){
+              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+            },
+          ),
+      
+        ],
+      
       ),
     );
   }
