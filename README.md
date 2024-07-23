@@ -2,6 +2,10 @@
 
 This is a Flutter application designed to create and manage SSH clients. An SSH client in this context is an object that executes commands.
 
+## Development Notice
+
+This repository is no longer being actively developed here. Development has moved to another repository. We will not continue to develop this project in this repository. For the latest development, please visit the new repository at [sshclient-kotlin](https://github.com/antonio-paulino/sshclient-kotlin).
+
 ## Features
 
 - Create a new SSH client with username, password, host, port and command.
